@@ -5,6 +5,15 @@ from app.routers.docente import router as router_docente
 from app.db.database import Base, engine
 from app.auth.jwt_handler import crear_access_token
 
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+
+print(os.getenv("SECRET_KEY"))
+print(os.getenv("APP_NAME"))
+
 app = FastAPI()
 
 
