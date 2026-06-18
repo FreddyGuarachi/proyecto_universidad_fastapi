@@ -15,6 +15,18 @@ def create_alumno(alumno_data: AlumnoCreate, db: Session):
     return db_alumno
 
 
+def upload_image_alumno(db: Session, alumno_id: int, image_path: str):
+
+    alumno = get_alumno_by_id(alumno_id=alumno_id, db=db)
+
+    alumno.foto_perfil = image_path
+
+    db.commit()
+    db.refresh(alumno)
+
+    return alumno
+
+
 def get_alumnos(
     db: Session,
     skip: int = 0,
@@ -37,7 +49,7 @@ def get_alumnos(
     total = query.count()
 
     column = getattr(Alumno, order_by)
-    
+
     column = column.desc() if order_dir == "desc" else column.asc()
 
     items = query.order_by(column).offset(skip).limit(limit).all()

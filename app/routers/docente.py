@@ -15,12 +15,17 @@ from app.crud.docente import (
     update_docente as update_docente_router,
     delete_docente as delete_docente_router,
 )
+from app.auth.security import get_current_user
 
 router = APIRouter(prefix="/docentes", tags=["Docentes"])
 
 
 @router.post("/", response_model=DocenteResponse)
-def create_docente(docente_data: DocenteCreate, db: Session = Depends(get_db)):
+def create_docente(
+    docente_data: DocenteCreate,
+    db: Session = Depends(get_db),
+    user: str = Depends(get_current_user),
+):
 
     return create_docente_router(docente_data=docente_data, db=db)
 

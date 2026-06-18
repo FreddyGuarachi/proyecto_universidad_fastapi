@@ -1,4 +1,13 @@
-from fastapi import APIRouter, Query, Path, Depends
+from fastapi import (
+    APIRouter,
+    Query,
+    Path,
+    Depends,
+    UploadFile,
+    File,
+    HTTPException,
+    status,
+)
 from sqlalchemy.orm import Session
 from typing import Optional, Literal
 from app.db.database import get_db
@@ -14,15 +23,35 @@ from app.crud.alumno import (
     get_alumno_by_id as get_alumno_by_id_router,
     update_alumno as update_alumno_router,
     delete_alumno as delete_alumno_router,
+    upload_image_alumno as upload_image_alumno_router,
 )
+from app.auth.security import get_current_user
+from app.services.file_service import save_image
 
 router = APIRouter(prefix="/alumnos", tags=["Alumnos"])
 
 
 @router.post("/", response_model=AlumnoResponse)
-def create_alumno(alumno_data: AlumnoCreate, db: Session = Depends(get_db)):
+def create_alumno(
+    alumno_data: AlumnoCreate,
+    db: Session = Depends(get_db),
+    user: str = Depends(get_current_user),
+):
 
     return create_alumno_router(alumno_data=alumno_data, db=db)
+
+
+@router.post("/{alumno_id}/image")
+async def upload_image_alumno(
+    alumno_id: int = Path(..., ge=1),
+    file: UploadFile = File(...),
+    db: Session = Depends(get_db),
+):
+    image_path = await save_image(file=file, alumno_id=alumno_id)
+
+    upload_image_alumno_router(db=db, alumno_id=alumno_id, image_path=image_path)
+
+    return {"message": "imagen guardada"}
 
 
 @router.get("/", response_model=AlumnoListResponse)

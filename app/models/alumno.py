@@ -17,6 +17,7 @@ class Alumno(Base):
     phone_number: Mapped[str] = mapped_column(nullable=False)
     email: Mapped[str] = mapped_column(nullable=False)
     address: Mapped[str] = mapped_column(nullable=False)
+    foto_perfil: Mapped[str | None] = mapped_column(nullable=True)
 
     carrera_id: Mapped[int] = mapped_column(ForeignKey("carreras.id"))
     carrera: Mapped[Carrera] = relationship(back_populates="alumnos")

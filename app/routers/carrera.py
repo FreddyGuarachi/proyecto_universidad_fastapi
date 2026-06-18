@@ -15,12 +15,17 @@ from app.crud.carrera import (
     update_carrera as update_carrera_router,
     delete_carrera as delete_carrera_router,
 )
+from app.auth.security import get_current_user
 
 router = APIRouter(prefix="/carreras", tags=["Carreras"])
 
 
 @router.post("/", response_model=CarreraResponse)
-def create_carrera(carrera_data: CarreraCreate, db: Session = Depends(get_db)):
+def create_carrera(
+    carrera_data: CarreraCreate,
+    db: Session = Depends(get_db),
+    user: str = Depends(get_current_user),
+):
 
     return create_carrera_router(carrera_data=carrera_data, db=db)
 
@@ -67,8 +72,6 @@ def update_carrera(
 
 
 @router.delete("/{carrera_id}", response_model=CarreraResponse)
-def delete_carrera(
-    carrera_id: int = Path(..., ge=1), db: Session = Depends(get_db)
-):
+def delete_carrera(carrera_id: int = Path(..., ge=1), db: Session = Depends(get_db)):
 
     return delete_carrera_router(carrera_id=carrera_id, db=db)

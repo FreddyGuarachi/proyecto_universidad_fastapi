@@ -27,6 +27,7 @@ class AlumnoUpdate(BaseModel):
 class AlumnoResponse(AlumnoBase):
     id: int
     carrera: CarreraSimple
+    foto_perfil: Optional[str] = None
     model_config = ConfigDict(from_attributes=True)
 
 
