@@ -55,7 +55,6 @@ class AlumnoRepository:
 
         column = self.ORDER_FIELDS[order_by]
         column = column.desc() if order_dir == "desc" else column.asc()
-
         stmt = stmt.order_by(column)
 
         # paginacion
@@ -78,9 +77,7 @@ class AlumnoRepository:
 
         return alumno_db
 
-    def delete(self, alumno_id: int):
-        alumno_db = self.find_by_id(alumno_id)
-
+    def delete(self, alumno_db: Alumno):
         self.db.delete(alumno_db)
 
         return alumno_db

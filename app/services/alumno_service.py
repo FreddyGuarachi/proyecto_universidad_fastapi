@@ -64,10 +64,9 @@ class AlumnoService:
         return alumno_db
 
     def delete(self, alumno_id: int):
-        self.get_or_404(alumno_id=alumno_id)
+        alumno_db = self.get_or_404(alumno_id)
 
-        alumno_db = self.repo.delete(alumno_id=alumno_id)
-
+        self.repo.delete(alumno_db)
         self.db.commit()
 
         return alumno_db
