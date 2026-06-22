@@ -46,7 +46,7 @@ def get_docentes(
 @router.get("/{docente_id}", response_model=docente.DocenteResponse)
 def get_docente_by_id(service: DocenteServiceDep, docente_id: int = Path(..., ge=1)):
 
-    return service.find_by_id(docente_id=docente_id)
+    return service.find_by_id(docente_id)
 
 
 @router.put("/{docente_id}", response_model=docente.DocenteResponse)
@@ -62,4 +62,4 @@ def update_docente(
 @router.delete("/{docente_id}", response_model=docente.DocenteResponse)
 def delete_docente(service: DocenteServiceDep, docente_id: int = Path(..., ge=1)):
 
-    return service.delete(docente_id=docente_id)
+    return service.delete(docente_id)

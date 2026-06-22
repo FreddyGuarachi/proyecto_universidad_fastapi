@@ -14,7 +14,7 @@ class AlumnoService:
         self.repo = AlumnoRepository(db)
 
     def get_or_404(self, alumno_id: int):
-        alumno_db = self.repo.find_by_id(alumno_id=alumno_id)
+        alumno_db = self.repo.find_by_id(alumno_id)
 
         if alumno_db is None:
             raise HTTPException(
@@ -23,7 +23,7 @@ class AlumnoService:
         return alumno_db
 
     def create(self, alumno_data: alumno.AlumnoCreate):
-        alumno_db = self.repo.create(alumno_data=alumno_data)
+        alumno_db = self.repo.create(alumno_data)
 
         self.db.commit()
         self.db.refresh(alumno_db)
@@ -51,10 +51,10 @@ class AlumnoService:
         )
 
     def find_by_id(self, alumno_id: int):
-        return self.get_or_404(alumno_id=alumno_id)
+        return self.get_or_404(alumno_id)
 
     def update(self, alumno_data: alumno.AlumnoUpdate, alumno_id: int):
-        alumno_db = self.get_or_404(alumno_id=alumno_id)
+        alumno_db = self.get_or_404(alumno_id)
 
         self.repo.update(alumno_data=alumno_data, alumno_db=alumno_db)
 

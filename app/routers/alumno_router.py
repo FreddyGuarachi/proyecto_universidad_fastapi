@@ -17,7 +17,7 @@ def create_alumno(
     alumno_data: alumno.AlumnoCreate,
 ):
 
-    return service.create(alumno_data=alumno_data)
+    return service.create(alumno_data)
 
 
 @router.get("/", response_model=alumno.AlumnoListResponse)
@@ -45,7 +45,7 @@ def get_alumnos(
 @router.get("/{alumno_id}", response_model=alumno.AlumnoResponse)
 def get_alumno_by_id(service: AlumnoServiceDep, alumno_id: int = Path(..., ge=1)):
 
-    return service.find_by_id(alumno_id=alumno_id)
+    return service.find_by_id(alumno_id)
 
 
 @router.put("/{alumno_id}", response_model=alumno.AlumnoResponse)
@@ -61,4 +61,4 @@ def update_alumno(
 @router.delete("/{alumno_id}", response_model=alumno.AlumnoResponse)
 def delete_alumno(service: AlumnoServiceDep, alumno_id: int = Path(..., ge=1)):
 
-    return service.delete(alumno_id=alumno_id)
+    return service.delete(alumno_id)

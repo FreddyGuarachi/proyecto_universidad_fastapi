@@ -24,7 +24,7 @@ class DocenteService:
         return docente_db
 
     def create(self, docente_data: docente.DocenteCreate):
-        docente_db = self.repo.create(docente_data=docente_data)
+        docente_db = self.repo.create(docente_data)
 
         self.db.commit()
         self.db.refresh(docente_db)
