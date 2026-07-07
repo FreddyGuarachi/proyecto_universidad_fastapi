@@ -4,7 +4,7 @@ from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 
 from app.schemas import docente
-from app.repositories.docente_repository import DocenteRepository
+from app.repositories.docente import DocenteRepository
 
 
 class DocenteService:

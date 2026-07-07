@@ -4,7 +4,7 @@ from fastapi import APIRouter, Query, Path, Depends
 
 from app.deps.docente_deps import DocenteServiceDep
 from app.schemas import docente
-from app.auth.security import get_current_user
+from app.auth.auth_dependencies import get_current_user
 
 router = APIRouter(
     prefix="/docentes", tags=["Docentes"], dependencies=[Depends(get_current_user)]

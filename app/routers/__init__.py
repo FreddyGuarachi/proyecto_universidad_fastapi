@@ -1,9 +1,9 @@
 from fastapi import FastAPI
 
-from .alumno_router import router as alumno_router
-from .docente_router import router as docente_router
-from .carrera_router import router as carrera_router
-from .user_router import router as user_router
+from .alumno import router as alumno_router
+from .docente import router as docente_router
+from .carrera import router as carrera_router
+from .user import router as user_router
 
 
 def register_routers(app: FastAPI):

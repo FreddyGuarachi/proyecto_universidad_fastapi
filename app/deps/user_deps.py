@@ -4,11 +4,11 @@ from fastapi import Depends
 from sqlalchemy.orm import Session
 
 from app.db.database import get_db
-from app.repositories.user_repository import UserRepository
+from app.services.user import UserService
 
 
-def get_user_service(db: Session = Depends(get_db)) -> UserRepository:
-    return UserRepository(db)
+def get_user_service(db: Session = Depends(get_db)) -> UserService:
+    return UserService(db)
 
 
-UserRepositoryDep = Annotated[UserRepository, Depends(get_user_service)]
+UserServiceDep = Annotated[UserService, Depends(get_user_service)]

@@ -4,7 +4,7 @@ from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 
 from app.schemas import alumno
-from app.repositories.alumno_repository import AlumnoRepository
+from app.repositories.alumno import AlumnoRepository
 
 
 class AlumnoService:

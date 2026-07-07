@@ -4,7 +4,7 @@ from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 
 from app.schemas import carrera
-from app.repositories.carrera_repository import CarreraRepository
+from app.repositories.carrera import CarreraRepository
 
 
 class CarreraService:

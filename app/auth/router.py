@@ -1,24 +1,22 @@
 from fastapi import APIRouter, HTTPException, Depends, status
 from fastapi.security import OAuth2PasswordRequestForm
-from app.auth.schemas import Token
-from app.auth.security import create_access_token, get_current_user
+
+from .schemas import Token
+from .jwt import create_access_token
+from .auth_dependencies import credentials_exception
+
+from app.deps.user_deps import UserServiceDep
 
 router = APIRouter(prefix="/auth", tags=["Auth"])
 
 
 @router.post("/login", response_model=Token)
-def login(form_data: OAuth2PasswordRequestForm = Depends()):
+def login(service: UserServiceDep, form_data: OAuth2PasswordRequestForm = Depends()):
+    user = service.authenticate(form_data.username, form_data.password)
 
-    if form_data.username != "admin" or form_data.password != "1234":
-        raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED, detail="Credenciales invalidas"
-        )
+    if not user:
+        raise credentials_exception
 
-    token = create_access_token({"sub": form_data.username})
+    token = create_access_token({"sub": user.username})
 
     return {"access_token": token, "token_type": "bearer"}
-
-
-@router.get("/admin")
-def admin(user: str = Depends(get_current_user)):
-    return {"message": "Acceso permitido", "usuario": user}

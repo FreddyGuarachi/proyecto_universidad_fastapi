@@ -4,7 +4,7 @@ from fastapi import APIRouter, Query, Path, Depends
 
 from app.schemas import carrera
 from app.deps.carrera_deps import CarreraServiceDep
-from app.auth.security import get_current_user
+from app.auth.auth_dependencies import get_current_user
 
 router = APIRouter(
     prefix="/carreras", tags=["Carreras"], dependencies=[Depends(get_current_user)]
